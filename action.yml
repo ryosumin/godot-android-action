@@ -44,32 +44,6 @@ runs:
         OUTPUT_FILENAME=${{ github.event.repository.name }}-template-v${{env.CURRENT_GODOT_VERSION}}-${{ inputs.build_version}}
         echo "OUTPUT_FILENAME=${OUTPUT_FILENAME}" >> $GITHUB_ENV
         echo "::set-output name=artifact_name::$(echo ${OUTPUT_FILENAME})"
-
-    - name: Download and prepare the Stable Godot .AAR LIB
-      shell: bash
-      run: | 
-        cd ${{ inputs.godot-lib_folder_path }} 
-        GODOT_AAR_LIB="godot-lib.aar"
-        
-        GODOT_AAR_FILENAME="godot-lib.${{env.CURRENT_GODOT_VERSION}}.${{ inputs.build_version}}"
-        FULL_PATHNAME_DOWNLOAD_GODOT_AAR="https://downloads.tuxfamily.org/godotengine/${{env.CURRENT_GODOT_VERSION}}"
-        
-        if [ ${{ inputs.build_version}} != stable ]; then
-          FULL_PATHNAME_DOWNLOAD_GODOT_AAR+=/${{ inputs.build_version}}
-        fi
-        
-        CURRENT_GODOT_VERSION=${{env.CURRENT_GODOT_VERSION}}
-        
-        if [ "${CURRENT_GODOT_VERSION:0:1}" != "4" ]; then
-          GODOT_AAR_FILENAME+=".release.aar"
-        else
-          GODOT_AAR_FILENAME+=".template_release.aar"
-        fi
-        
-        FULL_PATHNAME_DOWNLOAD_GODOT_AAR+=/${GODOT_AAR_FILENAME}
-        
-        wget $FULL_PATHNAME_DOWNLOAD_GODOT_AAR
-        mv $GODOT_AAR_FILENAME $GODOT_AAR_LIB
     
     - name: Grant execute permission for gradlew
       shell: bash

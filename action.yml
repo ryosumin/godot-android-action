@@ -58,7 +58,7 @@ runs:
     - name: Move `.gdap` file to `build/outputs/arr/` folder
       shell: bash
       run: |
-        mv ${{ inputs.gdap_file_path }} ${{ inputs.project_path }}/build/outputs/aar/
+        cp ${{ inputs.gdap_file_path }} ${{ inputs.project_path }}/build/outputs/aar/
     
     - name: Upload artifact
       uses: actions/upload-artifact@v3
